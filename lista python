@@ -1,0 +1,28 @@
+lista = ["Sophia","Laura","Isabella","Luiza","Helena","Maria Clara",
+         "Lara","Lívia","Ana Luiza","Letícia","Gabriela","Melissa",
+         "Emanuelly","Marina","Isis","Lavínia","Bianca","Alícia",
+         "Ana","Alice","Cecília","Heloísa","Bianca","Pietra",
+         "Lis","Maitê","Laís","Abigail","Leticia","Ester",
+         "Bruna","Sara","Rafaela","Melinda","Agnes","Jade",
+         "Iara","Catarina","Analice","Isabel","Luana","Diana",
+         "Ariana","Joana","Daniela","Paloma","Yara","Belinda",
+         "Clarissa","Alessandra","Dulce","Raquel","Bernardo",
+         "Theo","Felipe","Gustavo","João Pedro","Daniel",
+         "Pietro","Benjamin","Francisco","Thiago","Thomas",
+         "Enrico","Artur","Miguel","Lorenzo","Bryan","Guilherme",
+         "Lucas","Gustavo","Felipe","André","Igor","Levi","Emanuel",
+         "Kevin","Luis","Vicente","Martim","Afonso","Vinicios",
+         "Fernando","Renan","Valentim","Ângelo","Marcelo","Álvaro",
+         "Aquiles","Abel","Douglas","Raul","José","César","Abraão",
+         "Alexander","Renato","Edgar","Michael","Caetano"]
+
+tamanho = len(lista)
+nome = input("Digite um nome: ")
+existe = 0
+
+for i in range(tamanho):
+    if lista[i] == nome:
+        print (f"Esse nome está na posição {i} ({i+1}ª posição na lista)")
+        existe = 1
+if existe == 0:
+    print ("Esse nome não está na lista")
