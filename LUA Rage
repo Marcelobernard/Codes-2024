@@ -1,0 +1,6 @@
+function(arg1, arg2) //UNIT_POWER_EVENT import [arg1 = "player" && arg2 = "RAGE"]
+    local currentRage = UnitPower("Player", 1)
+    if currentRage > 80 then
+        return true
+    end
+end
