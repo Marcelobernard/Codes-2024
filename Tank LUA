@@ -1,0 +1,38 @@
+function Check()
+    local trueAgro = false
+    for i = 1, GetNumGroupMembers() do
+        local unit = "nameplate"..i
+        if UnitExists(unit) and UnitisEnemy("player", unit) then
+            local threatStatus = UnitThreatSituation("player", unit)
+            if threatStatus > 0 then
+                trueAgro = true
+                break
+            end
+        end
+    end
+    return trueAgro
+end
+
+function Count()
+    local count = 0
+    for i = 1, GetNumGroupMembers() do
+        local unit = "nameplate"..i
+        if UnitExists(unit) and UnitIsEnemy("player", unit) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+function Show(tA, tT)
+    local textF = CreateFrame("Frame", nil, UIParent)
+    textF:SetSize(x,y) -- Change X and Y by yourself --
+    textF:SetPoint("CENTER", UIParent, "CENTER") -- CENTER -> [0,0] --
+    local text = textFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    text:SetPoint("CENTER", textF, "CENTER") -- CENTER -> [0,0] --
+    text:SetText(tA.."/"..tT)
+end
+
+Check() -- Call 'Check' to get the amount of enemies with agro around the player --
+Count() -- Call 'Count' to get the amount of units around the player that are enemies --
+Show(trueAgro,count) -- Call 'Show' using 'trueAgro' from 'Check' and 'count' from 'Count' and print as text on screen --
