@@ -27,9 +27,9 @@ end
 function Show(tA, tT)
     local textF = CreateFrame("Frame", nil, UIParent)
     textF:SetSize(x,y) -- Change X and Y by yourself --
-    textF:SetPoint("CENTER", UIParent, "CENTER") -- CENTER -> [0,0] --
+    textF:SetPoint("CENTER", UIParent, "CENTER") -- Set the window position --
     local text = textFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    text:SetPoint("CENTER", textF, "CENTER") -- CENTER -> [0,0] --
+    text:SetPoint("CENTER", textF, "CENTER") -- Set the text position on window --
     text:SetText(tA.."/"..tT)
 end
 
