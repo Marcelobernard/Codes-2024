@@ -30,7 +30,7 @@ function Show(tA, tT)
     textF:SetPoint("CENTER", UIParent, "CENTER") -- Set the window position --
     local text = textFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     text:SetPoint("CENTER", textF, "CENTER") -- Set the text position on window --
-    text:SetText(tA.."/"..tT)
+    text:SetText("AGRO COUNT: "..tA.."/"..tT)
 end
 
 Check() -- Call 'Check' to get the amount of enemies with agro around the player --
