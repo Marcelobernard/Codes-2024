@@ -1,0 +1,27 @@
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+local maxDmg = 0
+
+local function updatemaxDmg(damage, spellID)
+    local spellName = GetSpellInfo(spellID)
+    if damage > maxDamage then
+        maxDamage = damage
+        maxDamageSpellID = spellID
+        print("[LBH] New biggest hit: " .. maxDmg .. " from " .. spellName)
+    end
+end
+
+frame:setScript("OnEvent", function(self, event, ...)
+    local timestamp, eventType, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, spellID, spellName, spellSchool, damageAmount = CombatLogGetCurrentEventInfo()
+
+    if sourceName == UnitName("player") and eventType == "SWING_DAMAGE" then
+        updatemaxDmg(damageAmount)
+    end
+end)
+
+-- TOC:
+-- ## Interface: 11302
+-- ## Title: LUNA Biggest Hit
+-- ## Author: Marcelo Bernard
+-- ## Version: 1.0
+-- ## Notes: Add-on created for self-use but published for public access
