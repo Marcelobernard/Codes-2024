@@ -1,5 +1,5 @@
-public class Main{
-    public static void main(String[] args){
+public class Main {
+    public static void main(String[] args) {
         Metal Ouro = new Ouro(1);
         Metal Prata = new Prata(1);
         System.out.println(Ouro.valor());
@@ -7,14 +7,14 @@ public class Main{
     }
 }
 
-public abstract class Metal{
+abstract class Metal {
     public abstract String valor();
 }
 
-public class Ouro extends Metal{
+class Ouro extends Metal {
     private double cotacao_ouro;
 
-    public Ouro(double cotacao_ouro){
+    public Ouro(double cotacao_ouro) {
         this.cotacao_ouro = cotacao_ouro;
     }
 
@@ -23,10 +23,10 @@ public class Ouro extends Metal{
     }
 }
 
-public class Prata extends Metal{
+class Prata extends Metal {
     private double cotacao_prata;
 
-    public Prata(double cotacao_prata){
+    public Prata(double cotacao_prata) {
         this.cotacao_prata = cotacao_prata;
     }
 
