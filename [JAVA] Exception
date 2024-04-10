@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String userT = "Aluno"; // usuário correto
+        String passT = "Estudante@1"; // senha correta
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("-- Simulação de Login no Laboratório Estácio --");
+        System.out.print("Usuário: ");
+        String user = scanner.nextLine(); // input do usuário
+        System.out.print("Senha: ");
+        String pass = scanner.nextLine(); // input da senha
+
+        try {
+            fazerLogin(user, pass, userT, passT); // chamando a verificação
+            System.out.println("Login bem-sucedido!");
+        } catch (LoginException e) {
+            System.out.println("Erro ao fazer login: " + e.getMessage());
+        }
+
+        scanner.close();
+    }
+
+    public static void fazerLogin(String user, String pass, String userT, String passT) throws LoginException {
+        if (!user.equals(userT) || !pass.equals(passT)) { // comparando se o que foi digitado é exatamente igual ao declarado
+            throw new LoginException("Algo inválido. Verifique o nome de usuário ou senha e tente novamente.");
+        }
+    }
+}
+
+class LoginException extends Exception {
+    public LoginException(String message) {
+        super(message);
+    }
+}
