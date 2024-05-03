@@ -16,7 +16,7 @@ import javafx.geometry.Pos;
 
 public class jdf extends Application {
     private boolean respostaCorreta = false;
-    private String palavra = "carro";
+    private String palavra = "carro"; // Palavra que será mostrada
     private Label palavraLabel;
 
     public void start(Stage primaryStage) {
@@ -24,43 +24,41 @@ public class jdf extends Application {
 
         ImageView imageView = new ImageView();
 
-        // Tenta achar a imagem, estou tendo problemas aqui então criei um try-catch para não atrapalhar o progresso
+        // Adiciona a imagem à parte superior direita
         try {
-            Image image = new Image("90p.png");
-            imageView.setImage(image);
+            Image imagem = new Image("90p.png");
+            imageView.setImage(imagem);
             imageView.setFitWidth(300);
             imageView.setFitHeight(400);
         } catch (IllegalArgumentException e) {
             System.err.println("Erro ao carregar a imagem: " + e.getMessage());
         }
+        HBox caixaSuperiorDireita = new HBox(imageView);
+        root.setTop(caixaSuperiorDireita);
+        BorderPane.setAlignment(caixaSuperiorDireita, Pos.TOP_RIGHT); // Alinha o HBox ao canto superior direito
+        BorderPane.setMargin(caixaSuperiorDireita, new Insets(10)); // Adiciona margem para espaçamento
 
-        HBox topRightBox = new HBox(imageView);
-        root.setTop(topRightBox);
-        BorderPane.setAlignment(topRightBox, Pos.TOP_RIGHT);
-        BorderPane.setMargin(topRightBox, new Insets(10));
+        GridPane painelBotoes = new GridPane();
+        painelBotoes.setPadding(new Insets(10));
+        painelBotoes.setHgap(5);
+        painelBotoes.setVgap(5);
 
-        GridPane buttonPane = new GridPane();
-        buttonPane.setPadding(new Insets(10));
-        buttonPane.setHgap(5);
-        buttonPane.setVgap(5);
-
-        // Cria os botões com o alfabeto
         int col = 0;
         int row = 0;
         for (char c = 'A'; c <= 'Z'; c++) {
-            Button button = new Button(String.valueOf(c));
-            button.setPrefSize(40, 40);
-            button.setOnAction(e -> {
+            Button botao = new Button(String.valueOf(c));
+            botao.setPrefSize(40, 40);
+            botao.setOnAction(e -> {
                 if (verificarResposta()) {
-                    button.setStyle("-fx-background-color: green;");
-                    button.setDisable(true);
-                    String letrasCorretas = palavraLabel.getText().replaceAll("\\s", "");
-                    palavraLabel.setText(getPalavraEscondida(letrasCorretas));
+                    botao.setStyle("-fx-background-color: green;");
+                    botao.setDisable(true);
+                    String letrasCorretas = palavraLabel.getText().replaceAll("\\s", ""); // Obtém letras corretas do texto atual
+                    palavraLabel.setText(getPalavraEscondida(letrasCorretas)); // Atualiza a palavra exibida
                 } else {
-                    button.setStyle("-fx-background-color: red;");
+                    botao.setStyle("-fx-background-color: red;");
                 }
             });
-            buttonPane.add(button, col, row);
+            painelBotoes.add(botao, col, row);
             col++;
             if (col > 6) {
                 col = 0;
@@ -68,21 +66,21 @@ public class jdf extends Application {
             }
         }
 
-        // Botões na parte inferior e central
-        HBox bottomButtonBox = new HBox(buttonPane);
-        bottomButtonBox.setAlignment(Pos.CENTER);
-        root.setBottom(bottomButtonBox);
+        // Centraliza os botões na parte inferior
+        HBox caixaBotoesInferior = new HBox(painelBotoes);
+        caixaBotoesInferior.setAlignment(Pos.CENTER); // Centraliza os botões horizontalmente
+        root.setBottom(caixaBotoesInferior);
 
-        // Palavra na parte superior e direita
+        // Adicione a palavra ao lado inferior direito
         palavraLabel = new Label(getPalavraEscondida(""));
-        palavraLabel.setStyle("-fx-font-size: 24px;"); // CSS
-        HBox bottomRightBox = new HBox(palavraLabel);
-        root.setRight(bottomRightBox);
-        BorderPane.setMargin(bottomRightBox, new Insets(0, 10, 10, 0));
+        palavraLabel.setStyle("-fx-font-size: 24px;"); // Define o tamanho da fonte como 24 pixels
+        HBox caixaInferiorEsquerda = new HBox(palavraLabel);
+        root.setLeft(caixaInferiorEsquerda);
+        BorderPane.setMargin(caixaInferiorEsquerda, new Insets(0, 10, 10, 0));
 
-        Scene scene = new Scene(root, 800, 600);
+        Scene cena = new Scene(root, 800, 600);
 
-        primaryStage.setScene(scene);
+        primaryStage.setScene(cena);
         primaryStage.setTitle("Jogo da Forca");
         primaryStage.setResizable(false);
 
