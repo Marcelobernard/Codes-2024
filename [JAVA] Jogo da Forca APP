@@ -10,8 +10,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
+
 
 
 public class jdf extends Application {
@@ -20,24 +22,30 @@ public class jdf extends Application {
     private Label palavraLabel;
 
     public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
+        VBox root = new VBox();
 
+        // Adiciona a imagem abaixo da palavra
         ImageView imageView = new ImageView();
-
-        // Adiciona a imagem à parte superior direita
+        HBox caixaImagem = new HBox(imageView);
+        caixaImagem.setAlignment(Pos.CENTER); // Centraliza a imagem horizontalmente
         try {
-            Image imagem = new Image("90p.png");
+            Image imagem = new Image("C:\\Users\\202209294361\\IdeaProjects\\jdf\\boneco.png");
             imageView.setImage(imagem);
             imageView.setFitWidth(300);
             imageView.setFitHeight(400);
         } catch (IllegalArgumentException e) {
             System.err.println("Erro ao carregar a imagem: " + e.getMessage());
         }
-        HBox caixaSuperiorDireita = new HBox(imageView);
-        root.setTop(caixaSuperiorDireita);
-        BorderPane.setAlignment(caixaSuperiorDireita, Pos.TOP_RIGHT); // Alinha o HBox ao canto superior direito
-        BorderPane.setMargin(caixaSuperiorDireita, new Insets(10)); // Adiciona margem para espaçamento
+        root.getChildren().add(caixaImagem);
 
+        // Adiciona a palavra ao topo
+        palavraLabel = new Label(getPalavraEscondida(""));
+        palavraLabel.setStyle("-fx-font-size: 100px;"); // Define o tamanho da fonte como 24 pixels
+        HBox caixaPalavra = new HBox(palavraLabel);
+        caixaPalavra.setAlignment(Pos.CENTER); // Centraliza a palavra horizontalmente
+        root.getChildren().add(caixaPalavra);
+
+        // Adiciona os botões abaixo da imagem
         GridPane painelBotoes = new GridPane();
         painelBotoes.setPadding(new Insets(10));
         painelBotoes.setHgap(5);
@@ -60,27 +68,20 @@ public class jdf extends Application {
             });
             painelBotoes.add(botao, col, row);
             col++;
-            if (col > 6) {
+            if (col > 12) {
                 col = 0;
                 row++;
             }
         }
 
-        // Centraliza os botões na parte inferior
-        HBox caixaBotoesInferior = new HBox(painelBotoes);
-        caixaBotoesInferior.setAlignment(Pos.CENTER); // Centraliza os botões horizontalmente
-        root.setBottom(caixaBotoesInferior);
+        HBox caixaBotoes = new HBox(painelBotoes);
+        caixaBotoes.setAlignment(Pos.CENTER); // Centraliza os botões horizontalmente
+        root.getChildren().add(caixaBotoes);
 
-        // Adicione a palavra ao lado inferior direito
-        palavraLabel = new Label(getPalavraEscondida(""));
-        palavraLabel.setStyle("-fx-font-size: 24px;"); // Define o tamanho da fonte como 24 pixels
-        HBox caixaInferiorEsquerda = new HBox(palavraLabel);
-        root.setLeft(caixaInferiorEsquerda);
-        BorderPane.setMargin(caixaInferiorEsquerda, new Insets(0, 10, 10, 0));
-
-        Scene cena = new Scene(root, 800, 600);
+        Scene cena = new Scene(root, 600, 620);
 
         primaryStage.setScene(cena);
+        root.setStyle("-fx-background-color: white;");
         primaryStage.setTitle("Jogo da Forca");
         primaryStage.setResizable(false);
 
