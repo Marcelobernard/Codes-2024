@@ -7,29 +7,58 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
-
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import javafx.scene.Node;
 
 public class jdf extends Application {
+    int foto = 0;
+
+    String[] objetos = {"Carro", "Bola", "Mesa", "Cama", "Rua",
+            "Porta", "Livro", "Caderno", "Computador", "Janela",
+            "Garfo", "Colher", "Faca", "Copo", "Telefone", "Camiseta", "Camisa",
+            "Vaso", "Cadeira", "Abajur", "Chave", "Mochila", "Fone", "Controle", "Geladeira", "Microondas",
+            "Tapete", "Cobertor", "Travesseiro", "Espelho", "Torradeira",
+            "Panela", "Escova", "Pente", "Shampoo", "Condicionador",
+            "Sabonete", "Toalha", "Edredom", "Almofada", "Lixeira",
+            "Vassoura", "Rodo", "Balde", "Regador", "Mangueira", "Tesoura",
+            "Grampeador", "Furadeira", "Alicate", "Martelo", "Broca", "Serra", "Compasso",
+            "Calculadora", "Agenda", "Caixa", "Envelope", "Papel",
+            "Tesoura", "Cola", "Caneta",
+            "Borracha", "Apontador", "Mochila", "Mala", "Bolsa", "Cinto", "Anel",
+            "Pulseira", "Brinco", "Colar", "Celular", "Tablet"};
+
     private boolean respostaCorreta = false;
-    private String palavra = "carro"; // Palavra que será mostrada
+    private List<Character> palavraLista = new ArrayList<>();
+    private List<Character> letrasCorretas = new ArrayList<>();
     private Label palavraLabel;
 
     public void start(Stage primaryStage) {
         VBox root = new VBox();
 
+        Random random = new Random();
+        String palavraEscolhida = objetos[random.nextInt(objetos.length)];
+
+        palavraLista.clear();
+        for (char letra : palavraEscolhida.toCharArray()) {
+            letra = Character.toUpperCase(letra);
+            boolean add = palavraLista.add(letra);
+            System.out.println(letra);
+            System.out.println(palavraLista);
+        }
+
         // Adiciona a imagem abaixo da palavra
         ImageView imageView = new ImageView();
         HBox caixaImagem = new HBox(imageView);
-        caixaImagem.setAlignment(Pos.CENTER); // Centraliza a imagem horizontalmente
+        caixaImagem.setAlignment(Pos.CENTER);
         try {
-            Image imagem = new Image("C:\\Users\\202209294361\\IdeaProjects\\jdf\\boneco.png");
+            Image imagem = new Image("boneco40.png");
             imageView.setImage(imagem);
             imageView.setFitWidth(300);
             imageView.setFitHeight(400);
@@ -39,8 +68,12 @@ public class jdf extends Application {
         root.getChildren().add(caixaImagem);
 
         // Adiciona a palavra ao topo
-        palavraLabel = new Label(getPalavraEscondida(""));
+        palavraLabel = new Label(getPalavraEscondida());
         palavraLabel.setStyle("-fx-font-size: 100px;"); // Define o tamanho da fonte como 24 pixels
+        int tamanhoPalavra = palavraLista.size();
+        if (tamanhoPalavra > 5){
+            palavraLabel.setStyle("-fx-font-size: 50px;");
+        }
         HBox caixaPalavra = new HBox(palavraLabel);
         caixaPalavra.setAlignment(Pos.CENTER); // Centraliza a palavra horizontalmente
         root.getChildren().add(caixaPalavra);
@@ -57,13 +90,43 @@ public class jdf extends Application {
             Button botao = new Button(String.valueOf(c));
             botao.setPrefSize(40, 40);
             botao.setOnAction(e -> {
-                if (verificarResposta()) {
+                char letra = botao.getText().charAt(0);
+                if (palavraLista.contains(letra) && !letrasCorretas.contains(letra)) {
                     botao.setStyle("-fx-background-color: green;");
                     botao.setDisable(true);
-                    String letrasCorretas = palavraLabel.getText().replaceAll("\\s", ""); // Obtém letras corretas do texto atual
-                    palavraLabel.setText(getPalavraEscondida(letrasCorretas)); // Atualiza a palavra exibida
+                    letrasCorretas.add(letra);
+                    palavraLabel.setText(getPalavraEscondida());
                 } else {
                     botao.setStyle("-fx-background-color: red;");
+                    foto++;
+                            if (foto == 1){
+                                Image imagem = new Image("boneco50.png");
+                                imageView.setImage(imagem);
+                            }
+                            else if (foto == 2){
+                                Image imagem = new Image("boneco60.png");
+                                imageView.setImage(imagem);
+                            }
+                            else if (foto == 3){
+                                Image imagem = new Image("boneco70.png");
+                                imageView.setImage(imagem);
+                            }
+                            else if (foto == 4){
+                                Image imagem = new Image("boneco80.png");
+                                imageView.setImage(imagem);
+                            }
+                            else if (foto == 5){
+                                Image imagem = new Image("boneco90.png");
+                                imageView.setImage(imagem);
+                            }
+                            else {
+                                Image imagem = new Image("boneco.png");
+                                imageView.setImage(imagem);
+                                for (Node node : painelBotoes.getChildren()) {
+                                    if (node instanceof Button) {
+                                        ((Button) node).setDisable(true);
+                                    }}
+                            }
                 }
             });
             painelBotoes.add(botao, col, row);
@@ -88,16 +151,10 @@ public class jdf extends Application {
         primaryStage.show();
     }
 
-    private boolean verificarResposta() {
-        respostaCorreta = !respostaCorreta;
-        return respostaCorreta;
-    }
-
-    private String getPalavraEscondida(String letrasCorretas) {
+    private String getPalavraEscondida() {
         StringBuilder palavraEscondida = new StringBuilder();
-        for (int i = 0; i < palavra.length(); i++) {
-            char letra = palavra.charAt(i);
-            if (letrasCorretas.contains(String.valueOf(letra))) {
+        for (char letra : palavraLista) {
+            if (letrasCorretas.contains(letra)) {
                 palavraEscondida.append(letra).append(" ");
             } else {
                 palavraEscondida.append("_ ");
